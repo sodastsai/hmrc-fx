@@ -26,6 +26,6 @@ extension Currency: CustomStringConvertible {
 
 extension Rate: CustomStringConvertible {
   public var description: String {
-    "GBP/\(currency)@\(rate)"
+    "\(currency)/GBP@\(rate)"
   }
 }

@@ -16,8 +16,15 @@ final class MonthlyRateParserTests: XCTestCase {
       XCTFail("Parsed list has wrong length")
       return
     }
-    XCTAssertEqual("\(rateList[0])", "GBP/TWD@39.84")
-    XCTAssertEqual("\(rateList[1])", "GBP/USD@1.3284")
-    XCTAssertEqual("\(rateList[2])", "GBP/EUR@1.127")
+    XCTAssertEqual("\(rateList[0])", "TWD/GBP@39.84")
+    XCTAssertEqual("\(rateList[1])", "USD/GBP@1.3284")
+    XCTAssertEqual("\(rateList[2])", "EUR/GBP@1.127")
+
+    let twdRate = rateList[0]
+    XCTAssertEqual(twdRate.country.name, "Taiwan")
+    XCTAssertEqual(twdRate.country.code, "TW")
+    XCTAssertEqual(twdRate.currency.name, "Dollar")
+    XCTAssertEqual(twdRate.currency.code, "TWD")
+    XCTAssertEqual("\(twdRate.rate)", "39.84")
   }
 }
