@@ -11,11 +11,18 @@ final class MonthlyRateParserTests: XCTestCase {
       XCTFail("Cannot load example XML")
       return
     }
-    let rateList = parseMonthlyRateXml(xmlContent)
-    guard rateList.count == 3 else {
+    guard let monthlyRate = parseMonthlyRateXml(xmlContent) else {
+      XCTFail("Failed to parse XML")
+      return
+    }
+    guard monthlyRate.rates.count == 3 else {
       XCTFail("Parsed list has wrong length")
       return
     }
+    XCTAssertEqual(monthlyRate.year, 2017)
+    XCTAssertEqual(monthlyRate.month, 12)
+
+    let rateList = monthlyRate.rates
     XCTAssertEqual("\(rateList[0])", "TWD/GBP@39.84")
     XCTAssertEqual("\(rateList[1])", "USD/GBP@1.3284")
     XCTAssertEqual("\(rateList[2])", "EUR/GBP@1.127")
