@@ -1,0 +1,23 @@
+<exchangeRateMonthList Period="01/Dec/2017 to 31/Dec/2017">
+    <exchangeRate>
+        <countryName>Taiwan</countryName>
+        <countryCode>TW</countryCode>
+        <currencyName>Dollar</currencyName>
+        <currencyCode>TWD</currencyCode>
+        <rateNew>39.84</rateNew>
+    </exchangeRate>
+    <exchangeRate>
+        <countryName>USA</countryName>
+        <countryCode>US</countryCode>
+        <currencyName>Dollar</currencyName>
+        <currencyCode>USD</currencyCode>
+        <rateNew>1.3284</rateNew>
+    </exchangeRate>
+    <exchangeRate>
+        <countryName>Eurozone</countryName>
+        <countryCode>EU</countryCode>
+        <currencyName>Euro</currencyName>
+        <currencyCode>EUR</currencyCode>
+        <rateNew>1.127</rateNew>
+    </exchangeRate>
+</exchangeRateMonthList>

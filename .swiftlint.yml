@@ -4,3 +4,4 @@ disabled_rules:
 excluded:
   - Tests/*/XCTestManifests.swift
   - Tests/LinuxMain.swift
+  - .build/
