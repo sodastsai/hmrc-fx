@@ -20,6 +20,6 @@ final class RateTests: XCTestCase {
     let rate = Rate(country: .init(name: "Taiwan", code: "TW"),
                     currency: .init(name: "Dollar", code: "TWD"),
                     rate: rawRate)
-    XCTAssertEqual("\(rate)", "GBP/TWD @ 39.84")
+    XCTAssertEqual("\(rate)", "GBP/TWD@39.84")
   }
 }
