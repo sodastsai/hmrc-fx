@@ -1,5 +1,7 @@
 import Foundation
 
+public typealias CurrencyCode = String
+
 public struct Country {
   public let name: String
   public let code: String
@@ -7,7 +9,7 @@ public struct Country {
 
 public struct Currency {
   public let name: String
-  public let code: String
+  public let code: CurrencyCode
 }
 
 public struct Rate {

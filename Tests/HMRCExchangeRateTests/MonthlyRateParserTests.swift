@@ -24,8 +24,8 @@ final class MonthlyRateParserTests: XCTestCase {
       XCTFail("Parsed list has wrong length")
       return
     }
-    XCTAssertEqual(monthlyRate.year, 2017)
-    XCTAssertEqual(monthlyRate.month, 12)
+
+    XCTAssertEqual(monthlyRate.month, Month(.dec, in: 2017))
 
     XCTAssertEqual("\(twdRate)", "TWD/GBP@39.84")
     XCTAssertEqual("\(usdRate)", "USD/GBP@1.3284")

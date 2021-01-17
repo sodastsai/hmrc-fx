@@ -2,15 +2,13 @@ import Foundation
 import SWXMLHash
 
 struct MonthlyRate {
-  let year: Int
-  let month: Int
+  let month: Month
   let rates: [CurrencyCode: [Rate]]
 }
 
-func parseMonthlyRate(from xmlString: String, for month: Month, in year: Year) -> [CurrencyCode: [Rate]]? {
+func parseMonthlyRate(from xmlString: String, for month: Month) -> [CurrencyCode: [Rate]]? {
   guard
     let monthlyRate = parseMonthlyRateXml(xmlString),
-    monthlyRate.year == year,
     monthlyRate.month == month
   else {
     return nil
@@ -23,7 +21,7 @@ func parseMonthlyRateXml(_ xmlContent: String) -> MonthlyRate? {
   guard
     let xmlRootList = xml["exchangeRateMonthList"].all.first,
     let period = xmlRootList.element?.attribute(by: "Period")?.text,
-    let dateRange = parseRepresentingMonth(from: period)
+    let month = parseRepresentingMonth(from: period)
   else {
     return nil
   }
@@ -32,7 +30,7 @@ func parseMonthlyRateXml(_ xmlContent: String) -> MonthlyRate? {
   }, by: {
     $0.currency.code
   })
-  return MonthlyRate(year: dateRange.year, month: dateRange.month, rates: rates)
+  return MonthlyRate(month: month, rates: rates)
 }
 
 private let periodDateFormatter: DateFormatter = {
@@ -41,7 +39,7 @@ private let periodDateFormatter: DateFormatter = {
   return formatter
 }()
 
-private func parseRepresentingMonth(from period: String) -> (year: Int, month: Int)? {
+private func parseRepresentingMonth(from period: String) -> Month? {
   let components = period.split(separator: " ")
   guard
     components.count == 3,
@@ -49,14 +47,10 @@ private func parseRepresentingMonth(from period: String) -> (year: Int, month: I
     let endDate = periodDateFormatter.date(from: String(components[2]))
   else { return nil }
 
-  let calendar = Calendar.current
-  let beginYear = calendar.component(.year, from: beginDate)
-  let endYear = calendar.component(.year, from: endDate)
-  let beginMonth = calendar.component(.month, from: beginDate)
-  let endMonth = calendar.component(.month, from: endDate)
-
-  guard beginYear == endYear, beginMonth == endMonth else { return nil }
-  return (year: beginYear, month: beginMonth)
+  let beginMonth = Month(of: beginDate)
+  let endMonth = Month(of: endDate)
+  guard beginMonth == endMonth else { return nil }
+  return beginMonth
 }
 
 private extension Rate {

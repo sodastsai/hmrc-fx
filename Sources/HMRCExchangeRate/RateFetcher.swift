@@ -1,16 +1,16 @@
 import Foundation
 
 protocol RateFetcher {
-  func fetchMonthlyRate(for month: Month, in year: Year) -> [CurrencyCode: [Rate]]?
+  func fetchRate(of month: Month) -> [CurrencyCode: [Rate]]?
 }
 
 protocol XMLDataRateFetcher: RateFetcher {
-  func urlOfMonthlyRateXML(for month: Month, in year: Year) -> URL?
+  func urlForRateXML(of month: Month) -> URL?
 }
 
 extension XMLDataRateFetcher {
-  func fetchMonthlyRate(for month: Month, in year: Year) -> [CurrencyCode: [Rate]]? {
-    guard let url = urlOfMonthlyRateXML(for: month, in: year) else {
+  func fetchRate(of month: Month) -> [CurrencyCode: [Rate]]? {
+    guard let url = urlForRateXML(of: month) else {
       return nil
     }
     var pendingXMLData: Data?
@@ -37,6 +37,6 @@ extension XMLDataRateFetcher {
     else {
       return nil
     }
-    return parseMonthlyRate(from: xmlString, for: month, in: year)
+    return parseMonthlyRate(from: xmlString, for: month)
   }
 }

@@ -16,11 +16,11 @@ let package = Package(
   targets: [
     .target(name: "HMRCExchangeRate",
             dependencies: [
-              "SWXMLHash",
+              .product(name: "SWXMLHash", package: "SWXMLHash"),
             ]),
     .testTarget(name: "HMRCExchangeRateTests",
                 dependencies: [
-                  "HMRCExchangeRate",
+                  .target(name: "HMRCExchangeRate"),
                 ],
                 resources: [
                   .process("Resources"),

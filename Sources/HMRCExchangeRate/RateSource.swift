@@ -1,11 +1,7 @@
 import Foundation
 
-typealias Year = Int
-typealias Month = Int
-typealias CurrencyCode = String
-
 public class RateSource {
-  private var cache = [Year: [Month: [CurrencyCode: [Rate]]]]()
+  private var cache = [Month: [CurrencyCode: [Rate]]]()
   private let rateFetcher: RateFetcher
 
   init(rateFetcher: RateFetcher) {
@@ -13,15 +9,17 @@ public class RateSource {
   }
 
   public func rate(of currencyCode: String, at date: Date) -> [Rate]? {
-    let year = Calendar.current.component(.year, from: date)
-    let month = Calendar.current.component(.month, from: date)
-    if let monthlyTable = cache[year]?[month] {
+    rate(of: currencyCode, in: Month(of: date))
+  }
+
+  public func rate(of currencyCode: String, in month: Month) -> [Rate]? {
+    if let monthlyTable = cache[month] {
       return monthlyTable[currencyCode]
     }
-    guard let fetchedValue = rateFetcher.fetchMonthlyRate(for: month, in: year) else {
+    guard let fetchedValue = rateFetcher.fetchRate(of: month) else {
       return nil
     }
-    cache[year, default: [:]][month, default: [:]] = fetchedValue
-    return cache[year]?[month]?[currencyCode]
+    cache[month, default: [:]] = fetchedValue
+    return cache[month]?[currencyCode]
   }
 }
