@@ -16,7 +16,7 @@ public class RateSource {
     self.rateFetcher = rateFetcher
   }
 
-  public func rate(of currencyCode: String, in date: Date) -> [Rate]? {
+  public func rate(of currencyCode: String, at date: Date) -> [Rate]? {
     let year = Calendar.current.component(.year, from: date)
     let month = Calendar.current.component(.month, from: date)
     if let monthlyTable = cache[year]?[month] {

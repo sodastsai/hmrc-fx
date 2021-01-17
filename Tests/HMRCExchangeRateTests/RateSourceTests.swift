@@ -32,25 +32,25 @@ final class RateSourceTests: XCTestCase {
     let source = RateSource(rateFetcher: fetcher)
 
     fetcher.rate = 40
-    guard let rate1 = source.rate(of: "TWD", in: .dateBy(day: 10, month: 8, year: 2018))?.first else {
+    guard let rate1 = source.rate(of: "TWD", at: .dateBy(day: 10, month: 8, year: 2018))?.first else {
       XCTFail("Failed to fetch rate")
       return
     }
     // fetch again to check caching behavior
-    guard source.rate(of: "TWD", in: .dateBy(day: 10, month: 8, year: 2018)) != nil else {
+    guard source.rate(of: "TWD", at: .dateBy(day: 10, month: 8, year: 2018)) != nil else {
       XCTFail("Failed to fetch rate")
       return
     }
     // fetch another to check caching behavior
     fetcher.rate = 38
-    guard let rate2 = source.rate(of: "TWD", in: .dateBy(day: 10, month: 9, year: 2018))?.first else {
+    guard let rate2 = source.rate(of: "TWD", at: .dateBy(day: 10, month: 9, year: 2018))?.first else {
       XCTFail("Failed to fetch rate")
       return
     }
     // fetch non exist
     fetcher.rate = nil
-    let rate3 = source.rate(of: "TWD", in: .dateBy(day: 10, month: 10, year: 2018))?.first
-    _ = source.rate(of: "TWD", in: .dateBy(day: 10, month: 10, year: 2018))
+    let rate3 = source.rate(of: "TWD", at: .dateBy(day: 10, month: 10, year: 2018))?.first
+    _ = source.rate(of: "TWD", at: .dateBy(day: 10, month: 10, year: 2018))
 
     XCTAssertEqual(fetcher.fetchingCount[2018]?[8], 1)
     XCTAssertEqual(fetcher.fetchingCount[2018]?[9], 1)
