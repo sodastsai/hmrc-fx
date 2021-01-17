@@ -9,7 +9,6 @@ let package = Package(
   ],
   products: [
     .library(name: "HMRCExchangeRate", targets: ["HMRCExchangeRate"]),
-    .library(name: "HMRCExchangeRate2020Resources", targets: ["HMRCExchangeRate2020Resources"]),
   ],
   dependencies: [
     .package(url: "https://github.com/drmohundro/SWXMLHash.git", .upToNextMajor(from: "5.0.0")),
@@ -26,12 +25,5 @@ let package = Package(
                 resources: [
                   .process("Resources"),
                 ]),
-    .target(name: "HMRCExchangeRate2020Resources",
-            dependencies: [
-              "HMRCExchangeRate",
-            ],
-            resources: [
-              .process("Resources"),
-            ]),
   ]
 )

@@ -9,7 +9,7 @@ This package provide currency conversion via [UK HMRC rate](http://www.hmrc.gov.
 ```swift
 import HMRCExchangeRate
 
-if let rate = RateSource.default.rate(of: "TWD", in: Date())?.first {
+if let rate = RateSource.directHMRC.rate(of: "TWD", in: Date())?.first {
   print("\(rate)")
 }
 ```

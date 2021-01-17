@@ -4,13 +4,9 @@ typealias Year = Int
 typealias Month = Int
 typealias CurrencyCode = String
 
-protocol RateFetcher {
-  func fetchMonthlyRate(for month: Month, in year: Year) -> [CurrencyCode: [Rate]]?
-}
-
 public class RateSource {
   private var cache = [Year: [Month: [CurrencyCode: [Rate]]]]()
-  private var rateFetcher: RateFetcher
+  private let rateFetcher: RateFetcher
 
   init(rateFetcher: RateFetcher) {
     self.rateFetcher = rateFetcher
