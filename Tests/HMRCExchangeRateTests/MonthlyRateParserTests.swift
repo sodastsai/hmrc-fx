@@ -15,19 +15,22 @@ final class MonthlyRateParserTests: XCTestCase {
       XCTFail("Failed to parse XML")
       return
     }
-    guard monthlyRate.rates.count == 3 else {
+    guard
+      monthlyRate.rates.count == 3,
+      let twdRate = monthlyRate.rates["TWD"],
+      let usdRate = monthlyRate.rates["USD"],
+      let eurRate = monthlyRate.rates["EUR"]
+    else {
       XCTFail("Parsed list has wrong length")
       return
     }
     XCTAssertEqual(monthlyRate.year, 2017)
     XCTAssertEqual(monthlyRate.month, 12)
 
-    let rateList = monthlyRate.rates
-    XCTAssertEqual("\(rateList[0])", "TWD/GBP@39.84")
-    XCTAssertEqual("\(rateList[1])", "USD/GBP@1.3284")
-    XCTAssertEqual("\(rateList[2])", "EUR/GBP@1.127")
+    XCTAssertEqual("\(twdRate)", "TWD/GBP@39.84")
+    XCTAssertEqual("\(usdRate)", "USD/GBP@1.3284")
+    XCTAssertEqual("\(eurRate)", "EUR/GBP@1.127")
 
-    let twdRate = rateList[0]
     XCTAssertEqual(twdRate.country.name, "Taiwan")
     XCTAssertEqual(twdRate.country.code, "TW")
     XCTAssertEqual(twdRate.currency.name, "Dollar")

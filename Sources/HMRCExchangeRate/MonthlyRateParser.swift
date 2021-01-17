@@ -4,7 +4,7 @@ import SWXMLHash
 struct MonthlyRate {
   let year: Int
   let month: Int
-  let rates: [Rate]
+  let rates: [CurrencyCode: Rate]
 }
 
 func parseMonthlyRateXml(_ xmlContent: String) -> MonthlyRate? {
@@ -16,7 +16,11 @@ func parseMonthlyRateXml(_ xmlContent: String) -> MonthlyRate? {
   else {
     return nil
   }
-  let rates = xmlRootList.children.compactMap { Rate(xmlIndexer: $0) }
+  let rates = Dictionary(uniqueKeysWithValues: xmlRootList.children.compactMap {
+    Rate(xmlIndexer: $0)
+  }.map {
+    ($0.currency.code, $0)
+  })
   return MonthlyRate(year: dateRange.year, month: dateRange.month, rates: rates)
 }
 
