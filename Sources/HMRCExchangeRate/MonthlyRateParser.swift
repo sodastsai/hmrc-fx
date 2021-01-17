@@ -7,6 +7,17 @@ struct MonthlyRate {
   let rates: [CurrencyCode: [Rate]]
 }
 
+func parseMonthlyRate(from xmlString: String, for month: Month, in year: Year) -> [CurrencyCode: [Rate]]? {
+  guard
+    let monthlyRate = parseMonthlyRateXml(xmlString),
+    monthlyRate.year == year,
+    monthlyRate.month == month
+  else {
+    return nil
+  }
+  return monthlyRate.rates
+}
+
 func parseMonthlyRateXml(_ xmlContent: String) -> MonthlyRate? {
   let xml = SWXMLHash.parse(xmlContent)
   guard

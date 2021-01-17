@@ -43,14 +43,11 @@ struct HMRCFetcher: RateFetcher {
 
     guard
       dispatchGroup.wait(timeout: .now() + 10) == .success,
-      let xmlString = pendingXmlString,
-      let fetchedResult = parseMonthlyRateXml(xmlString),
-      fetchedResult.year == year,
-      fetchedResult.month == month
+      let xmlString = pendingXmlString
     else {
       return nil
     }
-    return fetchedResult.rates
+    return parseMonthlyRate(from: xmlString, for: month, in: year)
   }
 }
 
