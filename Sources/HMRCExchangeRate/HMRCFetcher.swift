@@ -56,4 +56,5 @@ struct HMRCFetcher: RateFetcher {
 
 public extension RateSource {
   static let directHMRC = RateSource(rateFetcher: HMRCFetcher())
+  static var `default`: RateSource { directHMRC }
 }
