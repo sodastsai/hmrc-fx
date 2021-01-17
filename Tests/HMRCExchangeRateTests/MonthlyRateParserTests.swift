@@ -17,9 +17,9 @@ final class MonthlyRateParserTests: XCTestCase {
     }
     guard
       monthlyRate.rates.count == 3,
-      let twdRate = monthlyRate.rates["TWD"],
-      let usdRate = monthlyRate.rates["USD"],
-      let eurRate = monthlyRate.rates["EUR"]
+      let twdRate = monthlyRate.rates["TWD"]?.first,
+      let usdRate = monthlyRate.rates["USD"]?.first,
+      let eurRate = monthlyRate.rates["EUR"]?.first
     else {
       XCTFail("Parsed list has wrong length")
       return

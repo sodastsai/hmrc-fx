@@ -19,7 +19,7 @@ struct HMRCFetcher: RateFetcher {
     return URL(string: "http://www.hmrc.gov.uk/softwaredevelopers/rates/exrates-monthly-\(dateString).XML")
   }
 
-  func fetchMonthlyRate(for month: Month, in year: Year) -> [CurrencyCode: Rate]? {
+  func fetchMonthlyRate(for month: Month, in year: Year) -> [CurrencyCode: [Rate]]? {
     guard let url = url(for: month, in: year) else {
       return nil
     }
@@ -55,7 +55,5 @@ struct HMRCFetcher: RateFetcher {
 }
 
 public extension RateSource {
-  static func directHMRC() -> RateSource {
-    RateSource(rateFetcher: HMRCFetcher())
-  }
+  static let directHMRC = RateSource(rateFetcher: HMRCFetcher())
 }
