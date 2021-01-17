@@ -11,7 +11,8 @@ class MockRateFetcher: RateFetcher {
     guard let rate = rate else {
       return nil
     }
-    return ["TWD": Rate(country: .init(name: "Taiwan", code: "TW"), currency: .init(name: "Dollar", code: "TWD"),
+    return ["TWD": Rate(country: .init(name: "Taiwan", code: "TW"),
+                        currency: .init(name: "Dollar", code: "TWD"),
                         rate: rate)]
   }
 }
@@ -36,7 +37,7 @@ final class RateSourceTests: XCTestCase {
       return
     }
     // fetch again to check caching behavior
-    guard let _ = source.rate(of: "TWD", in: .dateBy(day: 10, month: 8, year: 2018)) else {
+    guard source.rate(of: "TWD", in: .dateBy(day: 10, month: 8, year: 2018)) != nil else {
       XCTFail("Failed to fetch rate")
       return
     }
