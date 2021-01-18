@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-  name: "HMRCExchangeRate",
+  name: "hmrc-fx",
   platforms: [
     .macOS(.v11),
   ],
