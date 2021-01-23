@@ -73,4 +73,8 @@ public extension Month {
     }
     self = .init(name, in: year)
   }
+
+  static var current: Month {
+    .init(of: Date())
+  }
 }
