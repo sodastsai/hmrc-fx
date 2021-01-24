@@ -1,7 +1,7 @@
 import Foundation
 
 protocol RateFetcher {
-  func fetchRate(of month: Month) -> [CurrencyCode: [Rate]]?
+  func fetchRate(of month: Month, using urlSession: URLSession) -> [CurrencyCode: [Rate]]?
 }
 
 protocol XMLDataRateFetcher: RateFetcher {
@@ -9,14 +9,14 @@ protocol XMLDataRateFetcher: RateFetcher {
 }
 
 extension XMLDataRateFetcher {
-  func fetchRate(of month: Month) -> [CurrencyCode: [Rate]]? {
+  func fetchRate(of month: Month, using urlSession: URLSession) -> [CurrencyCode: [Rate]]? {
     guard let url = urlForRateXML(of: month) else {
       return nil
     }
     var pendingXMLData: Data?
     let dispatchGroup = DispatchGroup()
     dispatchGroup.enter()
-    URLSession.shared.dataTask(with: url) { data, response, error in
+    urlSession.dataTask(with: url) { data, response, error in
       defer {
         dispatchGroup.leave()
       }
