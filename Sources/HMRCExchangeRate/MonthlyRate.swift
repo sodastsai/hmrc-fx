@@ -8,7 +8,7 @@ struct MonthlyRate {
 
 extension MonthlyRate: Decodable {
   enum DecodingError: Error {
-    case invalidPeriodAttribute
+    case invalidPeriodAttribute(String)
   }
 
   private enum CodingKey: String, Swift.CodingKey {
@@ -20,7 +20,7 @@ extension MonthlyRate: Decodable {
     let container = try decoder.container(keyedBy: CodingKey.self)
     let periodString = try container.decode(String.self, forKey: .period)
     guard let representingMonth = parseRepresentingMonth(from: periodString) else {
-      throw DecodingError.invalidPeriodAttribute
+      throw DecodingError.invalidPeriodAttribute(periodString)
     }
     month = representingMonth
     rates = Dictionary(grouping: try container.decode([Rate].self, forKey: .rates)) {
