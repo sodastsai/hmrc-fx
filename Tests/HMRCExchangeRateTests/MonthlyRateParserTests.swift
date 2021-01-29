@@ -5,13 +5,12 @@ import XCTest
 final class MonthlyRateParserTests: XCTestCase {
   func testParseMonthlyXML() {
     guard
-      let xmlPath = Bundle.module.path(forResource: "MonthlyRateExample", ofType: "xml"),
-      let xmlContent = try? String(contentsOfFile: xmlPath, encoding: .utf8)
+      let xmlPath = Bundle.module.path(forResource: "MonthlyRateExample", ofType: "xml")
     else {
       XCTFail("Cannot load example XML")
       return
     }
-    guard let monthlyRate = parseMonthlyRateXml(xmlContent) else {
+    guard let monthlyRate = MonthlyRate(contentsOf: URL(fileURLWithPath: xmlPath)) else {
       XCTFail("Failed to parse XML")
       return
     }

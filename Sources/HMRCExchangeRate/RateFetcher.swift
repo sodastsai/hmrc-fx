@@ -32,11 +32,10 @@ extension XMLDataRateFetcher {
 
     guard
       dispatchGroup.wait(timeout: .now() + 10) == .success,
-      let xmlData = pendingXMLData,
-      let xmlString = String(data: xmlData, encoding: .utf8)
+      let xmlData = pendingXMLData
     else {
       return nil
     }
-    return parseMonthlyRate(from: xmlString, for: month)
+    return MonthlyRate(xmlData: xmlData)?.rates
   }
 }

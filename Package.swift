@@ -11,12 +11,12 @@ let package = Package(
     .library(name: "HMRCExchangeRate", targets: ["HMRCExchangeRate"]),
   ],
   dependencies: [
-    .package(url: "https://github.com/drmohundro/SWXMLHash.git", .upToNextMajor(from: "5.0.0")),
+    .package(url: "https://github.com/MaxDesiatov/XMLCoder.git", .upToNextMinor(from: "0.12.0")),
   ],
   targets: [
     .target(name: "HMRCExchangeRate",
             dependencies: [
-              .product(name: "SWXMLHash", package: "SWXMLHash"),
+              .product(name: "XMLCoder", package: "XMLCoder"),
             ]),
     .testTarget(name: "HMRCExchangeRateTests",
                 dependencies: [
