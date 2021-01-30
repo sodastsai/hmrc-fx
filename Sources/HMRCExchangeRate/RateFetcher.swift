@@ -1,15 +1,16 @@
 import Foundation
 
 protocol RateFetcher {
-  func fetchRate(of month: Month, using urlSession: URLSession) -> [CurrencyCode: [Rate]]?
+  func fetchRate(of month: Month) -> [CurrencyCode: [Rate]]?
 }
 
-protocol XMLDataRateFetcher: RateFetcher {
+protocol RemoteXMLDataRateFetcher: RateFetcher {
+  var urlSession: URLSession { get }
   func urlForRateXML(of month: Month) -> URL?
 }
 
-extension XMLDataRateFetcher {
-  func fetchRate(of month: Month, using urlSession: URLSession) -> [CurrencyCode: [Rate]]? {
+extension RemoteXMLDataRateFetcher {
+  func fetchRate(of month: Month) -> [CurrencyCode: [Rate]]? {
     guard let url = urlForRateXML(of: month) else {
       return nil
     }

@@ -1,6 +1,8 @@
 import Foundation
 
-struct HMRCRateFetcher: XMLDataRateFetcher {
+struct HMRCRateFetcher: RemoteXMLDataRateFetcher {
+  let urlSession = URLSession.shared
+
   private func string(of month: Month) -> String {
     let yearString = "\(month.year)".suffix(2)
     let monthValue = month.name.rawValue
