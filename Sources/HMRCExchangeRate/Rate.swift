@@ -6,16 +6,32 @@ public struct Rate {
   public struct Country {
     public let name: String
     public let code: String
+
+    public init(name: String, code: String) {
+      self.name = name
+      self.code = code
+    }
   }
 
   public struct Currency {
     public let name: String
     public let code: CurrencyCode
+
+    public init(name: String, code: String) {
+      self.name = name
+      self.code = code
+    }
   }
 
   public let country: Country
   public let currency: Currency
   public let rate: Decimal
+
+  public init(country: Country, currency: Currency, rate: Decimal) {
+    self.country = country
+    self.currency = currency
+    self.rate = rate
+  }
 }
 
 extension Rate.Country: CustomStringConvertible {
