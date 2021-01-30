@@ -6,7 +6,7 @@ class MockRateFetcher: RateFetcher {
   var fetchingCount = [Month: Int]()
   var rate: Decimal?
 
-  func fetchRate(of month: Month) -> [CurrencyCode: [Rate]]? {
+  func fetchRate(of month: Month) -> [Rate.CurrencyCode: [Rate]]? {
     fetchingCount[month, default: 0] += 1
     guard let rate = rate else {
       return nil

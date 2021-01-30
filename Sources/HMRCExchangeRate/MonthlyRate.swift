@@ -3,7 +3,7 @@ import XMLCoder
 
 struct MonthlyRate {
   let month: Month
-  let rates: [CurrencyCode: [Rate]]
+  let rates: [Rate.CurrencyCode: [Rate]]
 }
 
 extension MonthlyRate: Decodable {

@@ -1,7 +1,7 @@
 import Foundation
 
 public class RateSource {
-  private var cache = [Month: [CurrencyCode: [Rate]]]()
+  private var cache = [Month: [Rate.CurrencyCode: [Rate]]]()
   private let rateFetcher: RateFetcher
 
   public init(rateFetcher: RateFetcher) {

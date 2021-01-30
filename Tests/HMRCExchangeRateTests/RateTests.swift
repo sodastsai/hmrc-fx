@@ -3,12 +3,12 @@ import XCTest
 
 final class RateTests: XCTestCase {
   func testCountryDescription() {
-    let country = Country(name: "Taiwan", code: "TW")
+    let country = Rate.Country(name: "Taiwan", code: "TW")
     XCTAssertEqual("\(country)", "Taiwan")
   }
 
   func testCurrencyDescription() {
-    let currency = Currency(name: "Dollar", code: "USD")
+    let currency = Rate.Currency(name: "Dollar", code: "USD")
     XCTAssertEqual("\(currency)", "USD")
   }
 

@@ -1,7 +1,7 @@
 import Foundation
 
 public protocol RateFetcher {
-  func fetchRate(of month: Month) -> [CurrencyCode: [Rate]]?
+  func fetchRate(of month: Month) -> [Rate.CurrencyCode: [Rate]]?
 }
 
 protocol RemoteXMLDataRateFetcher: RateFetcher {
@@ -10,7 +10,7 @@ protocol RemoteXMLDataRateFetcher: RateFetcher {
 }
 
 extension RemoteXMLDataRateFetcher {
-  func fetchRate(of month: Month) -> [CurrencyCode: [Rate]]? {
+  func fetchRate(of month: Month) -> [Rate.CurrencyCode: [Rate]]? {
     guard let url = urlForRateXML(of: month) else {
       return nil
     }
