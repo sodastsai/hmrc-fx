@@ -1,6 +1,6 @@
 import Foundation
 
-protocol RateFetcher {
+public protocol RateFetcher {
   func fetchRate(of month: Month) -> [CurrencyCode: [Rate]]?
 }
 

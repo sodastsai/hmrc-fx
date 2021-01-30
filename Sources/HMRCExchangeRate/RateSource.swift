@@ -4,7 +4,7 @@ public class RateSource {
   private var cache = [Month: [CurrencyCode: [Rate]]]()
   private let rateFetcher: RateFetcher
 
-  init(rateFetcher: RateFetcher) {
+  public init(rateFetcher: RateFetcher) {
     self.rateFetcher = rateFetcher
   }
 
