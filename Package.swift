@@ -9,6 +9,7 @@ let package = Package(
   ],
   products: [
     .library(name: "HMRCExchangeRate", targets: ["HMRCExchangeRate"]),
+    .executable(name: "HMRCExchangeRateDemo", targets: ["HMRCExchangeRateDemo"]),
   ],
   dependencies: [
     .package(url: "https://github.com/MaxDesiatov/XMLCoder.git", .upToNextMinor(from: "0.12.0")),
@@ -25,5 +26,8 @@ let package = Package(
                 resources: [
                   .process("Resources"),
                 ]),
+    .executableTarget(name: "HMRCExchangeRateDemo", dependencies: [
+      .target(name: "HMRCExchangeRate"),
+    ]),
   ]
 )
