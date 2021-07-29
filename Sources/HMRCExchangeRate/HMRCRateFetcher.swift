@@ -10,8 +10,13 @@ struct HMRCRateFetcher: RemoteXMLDataRateFetcher {
     return "\(monthString)\(yearString)"
   }
 
-  func urlForRateXML(of month: Month) -> URL? {
-    URL(string: "http://www.hmrc.gov.uk/softwaredevelopers/rates/exrates-monthly-\(string(of: month)).XML")
+  func urlForRateXML(of month: Month) throws -> URL {
+    guard let url =
+      URL(string: "http://www.hmrc.gov.uk/softwaredevelopers/rates/exrates-monthly-\(string(of: month)).XML")
+    else {
+      throw RateFetcherError.invalidURL
+    }
+    return url
   }
 }
 

@@ -6,10 +6,10 @@ class MockRateFetcher: RateFetcher {
   var fetchingCount = [Month: Int]()
   var rate: Decimal?
 
-  func fetchRate(of month: Month) -> [Rate.CurrencyCode: [Rate]]? {
+  func fetchRate(of month: Month) throws -> [Rate.CurrencyCode: [Rate]] {
     fetchingCount[month, default: 0] += 1
     guard let rate = rate else {
-      return nil
+      throw RateFetcherError.fetchingError
     }
     return ["TWD": [Rate(country: .init(name: "Taiwan", code: "TW"),
                          currency: .init(name: "Dollar", code: "TWD"),
@@ -34,33 +34,40 @@ final class RateSourceTests: XCTestCase {
     let source = RateSource(rateFetcher: fetcher)
 
     fetcher.rate = 40
-    guard let rate1 = source.rate(of: "TWD", at: .dateBy(day: 10, of: Month(.aug, in: 2018)))?.first else {
+    do {
+      let rates = try source.rate(of: "TWD", at: .dateBy(day: 10, of: Month(.aug, in: 2018)))
+      guard let rate1 = rates.first else {
+        XCTFail("Failed to fetch rate")
+        return
+      }
+      XCTAssertEqual(rate1.currency.code, "TWD")
+      XCTAssertEqual(rate1.rate, 40)
+    } catch {
       XCTFail("Failed to fetch rate")
-      return
     }
     // fetch again to check caching behavior
-    guard source.rate(of: "TWD", at: .dateBy(day: 10, of: Month(.aug, in: 2018))) != nil else {
-      XCTFail("Failed to fetch rate")
-      return
-    }
+    XCTAssertNoThrow(try source.rate(of: "TWD", at: .dateBy(day: 10, of: Month(.aug, in: 2018))))
     // fetch another to check caching behavior
     fetcher.rate = 38
-    guard let rate2 = source.rate(of: "TWD", at: .dateBy(day: 10, of: Month(.sep, in: 2018)))?.first else {
+    do {
+      let rates = try source.rate(of: "TWD", at: .dateBy(day: 10, of: Month(.sep, in: 2018)))
+      guard let rate2 = rates.first else {
+        XCTFail("Failed to fetch rate")
+        return
+      }
+      XCTAssertEqual(rate2.rate, 38)
+    } catch {
       XCTFail("Failed to fetch rate")
-      return
     }
     // fetch non exist
     fetcher.rate = nil
-    let rate3 = source.rate(of: "TWD", at: .dateBy(day: 10, of: Month(.oct, in: 2018)))?.first
-    _ = source.rate(of: "TWD", at: .dateBy(day: 10, of: Month(.oct, in: 2018)))
+    XCTAssertThrowsError(try source.rate(of: "TWD", at: .dateBy(day: 10, of: Month(.oct, in: 2018)))) { error in
+      XCTAssertEqual(error as? RateFetcherError, RateFetcherError.fetchingError)
+    }
+    XCTAssertThrowsError(try source.rate(of: "TWD", at: .dateBy(day: 10, of: Month(.oct, in: 2018))))
 
     XCTAssertEqual(fetcher.fetchingCount[Month(.aug, in: 2018)], 1)
     XCTAssertEqual(fetcher.fetchingCount[Month(.sep, in: 2018)], 1)
     XCTAssertEqual(fetcher.fetchingCount[Month(.oct, in: 2018)], 2)
-
-    XCTAssertEqual(rate1.currency.code, "TWD")
-    XCTAssertEqual(rate1.rate, 40)
-    XCTAssertEqual(rate2.rate, 38)
-    XCTAssertNil(rate3)
   }
 }

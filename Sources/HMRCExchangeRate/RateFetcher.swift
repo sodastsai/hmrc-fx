@@ -1,19 +1,24 @@
 import Foundation
 
 public protocol RateFetcher {
-  func fetchRate(of month: Month) -> [Rate.CurrencyCode: [Rate]]?
+  func fetchRate(of month: Month) throws -> [Rate.CurrencyCode: [Rate]]
+}
+
+enum RateFetcherError: Error {
+  case invalidURL
+  case fetchingTimeout
+  case fetchingError
 }
 
 protocol RemoteXMLDataRateFetcher: RateFetcher {
   var urlSession: URLSession { get }
-  func urlForRateXML(of month: Month) -> URL?
+  func urlForRateXML(of month: Month) throws -> URL
 }
 
 extension RemoteXMLDataRateFetcher {
-  func fetchRate(of month: Month) -> [Rate.CurrencyCode: [Rate]]? {
-    guard let url = urlForRateXML(of: month) else {
-      return nil
-    }
+  func fetchRate(of month: Month) throws -> [Rate.CurrencyCode: [Rate]] {
+    let url = try urlForRateXML(of: month)
+
     var pendingXMLData: Data?
     let dispatchGroup = DispatchGroup()
     dispatchGroup.enter()
@@ -31,13 +36,13 @@ extension RemoteXMLDataRateFetcher {
       pendingXMLData = data
     }.resume()
 
-    guard
-      dispatchGroup.wait(timeout: .now() + 10) == .success,
-      let xmlData = pendingXMLData,
-      let monthlyRate = try? MonthlyRate(xmlData: xmlData)
-    else {
-      return nil
+    guard dispatchGroup.wait(timeout: .now() + 10) == .success else {
+      throw RateFetcherError.fetchingTimeout
     }
+    guard let xmlData = pendingXMLData else {
+      throw RateFetcherError.fetchingError
+    }
+    let monthlyRate = try MonthlyRate(xmlData: xmlData)
     return monthlyRate.rates
   }
 }
