@@ -12,16 +12,16 @@ public class RateSource {
     self.rateFetcher = rateFetcher
   }
 
-  public func rate(of currencyCode: String, at date: Date) throws -> [Rate] {
-    try rate(of: currencyCode, in: Month(of: date))
+  public func rate(of currencyCode: String, at date: Date) async throws -> [Rate] {
+    try await rate(of: currencyCode, in: Month(of: date))
   }
 
-  public func rate(of currencyCode: String, in month: Month) throws -> [Rate] {
+  public func rate(of currencyCode: String, in month: Month) async throws -> [Rate] {
     if let monthlyTable = cache[month], let cachedRate = monthlyTable[currencyCode] {
       return cachedRate
     }
 
-    let fetchedValue = try rateFetcher.fetchRate(of: month)
+    let fetchedValue = try await rateFetcher.fetchRate(of: month)
     cache[month, default: [:]] = fetchedValue
 
     guard let rates = fetchedValue[currencyCode] else {
