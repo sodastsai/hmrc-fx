@@ -30,22 +30,14 @@ extension MonthlyRate: Decodable {
 }
 
 extension MonthlyRate {
-  init?(contentsOf url: URL) {
-    guard
-      let xmlData = try? Data(contentsOf: url),
-      let decoded = Self(xmlData: xmlData)
-    else {
-      return nil
-    }
-    self = decoded
+  init(contentsOf url: URL) throws {
+    let xmlData = try Data(contentsOf: url)
+    self = try Self(xmlData: xmlData)
   }
 
-  init?(xmlData: Data) {
+  init(xmlData: Data) throws {
     let decoder = XMLDecoder()
-    guard let decoded = try? decoder.decode(Self.self, from: xmlData) else {
-      return nil
-    }
-    self = decoded
+    self = try decoder.decode(Self.self, from: xmlData)
   }
 }
 

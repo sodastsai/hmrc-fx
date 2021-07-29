@@ -10,7 +10,7 @@ final class MonthlyRateParserTests: XCTestCase {
       XCTFail("Cannot load example XML")
       return
     }
-    guard let monthlyRate = MonthlyRate(contentsOf: URL(fileURLWithPath: xmlPath)) else {
+    guard let monthlyRate = try? MonthlyRate(contentsOf: URL(fileURLWithPath: xmlPath)) else {
       XCTFail("Failed to parse XML")
       return
     }

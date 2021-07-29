@@ -33,10 +33,11 @@ extension RemoteXMLDataRateFetcher {
 
     guard
       dispatchGroup.wait(timeout: .now() + 10) == .success,
-      let xmlData = pendingXMLData
+      let xmlData = pendingXMLData,
+      let monthlyRate = try? MonthlyRate(xmlData: xmlData)
     else {
       return nil
     }
-    return MonthlyRate(xmlData: xmlData)?.rates
+    return monthlyRate.rates
   }
 }
