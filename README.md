@@ -13,12 +13,14 @@ import Foundation
 import HMRCExchangeRate
 
 // Get exchange rate by `Date`
-if let rate = RateSource.directHMRC.rate(of: "TWD", at: Date())?.first {
+let rates = try? await RateSource.directHMRC.rate(of: "TWD", at: Date())
+if let rate = rates?.first {
     print("Current rate - \(rate)")
 }
 
 // Get exchange rate of a certain month
-if let rate = RateSource.directHMRC.rate(of: "TWD", in: Month(.sep, in: 2020))?.first {
+let rates = try? await RateSource.directHMRC.rate(of: "TWD", in: Month(.sep, in: 2020))
+if let rate = rates?.first {
     print("Rate of Sept 2020 - \(rate)")
 }
 ```
@@ -28,17 +30,17 @@ if let rate = RateSource.directHMRC.rate(of: "TWD", in: Month(.sep, in: 2020))?.
 
 This is a Swift Package, and hence you could use it in a way like this
 ```swift
-// swift-tools-version:5.3
+// swift-tools-version:5.5
 
 import PackageDescription
 
 let package = Package(
     name: "fx-example",
     platforms: [
-        .macOS(.v11),
+        .macOS(.v12),
     ],
     dependencies: [
-        .package(url: "https://github.com/sodastsai/hmrc-fx.git", from: "0.2.0"),
+        .package(url: "https://github.com/sodastsai/hmrc-fx.git", from: "0.5.0"),
     ],
     targets: [
         .target(
