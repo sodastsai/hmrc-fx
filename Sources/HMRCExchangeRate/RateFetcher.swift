@@ -4,7 +4,7 @@ public protocol RateFetcher {
   func fetchRate(of month: Month) async throws -> [Rate.CurrencyCode: [Rate]]
 }
 
-enum RateFetcherError: Error {
+public enum RateFetcherError: Error {
   case invalidURL
   case fetchingError
 }
