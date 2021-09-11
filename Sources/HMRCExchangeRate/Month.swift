@@ -20,15 +20,7 @@ extension Month: CustomStringConvertible {
   }
 }
 
-extension Month: Comparable {
-  public static func == (lhs: Self, rhs: Self) -> Bool {
-    lhs.year == rhs.year && lhs.name == rhs.name
-  }
-
-  public static func < (lhs: Self, rhs: Self) -> Bool {
-    lhs.year < rhs.year || (lhs.year == rhs.year && lhs.name < rhs.name)
-  }
-}
+extension Month: Comparable {}
 
 extension Month.Name: Comparable {
   public static func == (lhs: Self, rhs: Self) -> Bool {
