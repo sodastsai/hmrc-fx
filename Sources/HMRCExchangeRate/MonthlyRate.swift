@@ -23,9 +23,7 @@ extension MonthlyRate: Decodable {
       throw DecodingError.invalidPeriodAttribute(periodString)
     }
     month = representingMonth
-    rates = Dictionary(grouping: try container.decode([Rate].self, forKey: .rates)) {
-      $0.currency.code
-    }
+    rates = Dictionary(grouping: try container.decode([Rate].self, forKey: .rates), by: \.currency.code)
   }
 }
 
