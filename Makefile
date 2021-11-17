@@ -2,5 +2,5 @@
 
 lint:
 	swiftformat .
-	swiftlint autocorrect
+	swiftlint --fix
 	swiftlint lint --strict
