@@ -67,4 +67,34 @@ final class MonthTests: XCTestCase {
       Month(.mar, in: 2021),
     ])
   }
+
+  func testMonthNameStringLiteral() {
+    XCTAssertEqual(Month.Name(rawValue: "Jan"), .jan)
+    XCTAssertEqual(Month.Name(rawValue: "Feb"), .feb)
+    XCTAssertEqual(Month.Name(rawValue: "Mar"), .mar)
+    XCTAssertEqual(Month.Name(rawValue: "Apr"), .apr)
+    XCTAssertEqual(Month.Name(rawValue: "May"), .may)
+    XCTAssertEqual(Month.Name(rawValue: "Jun"), .jun)
+    XCTAssertEqual(Month.Name(rawValue: "Jul"), .jul)
+    XCTAssertEqual(Month.Name(rawValue: "Aug"), .aug)
+    XCTAssertEqual(Month.Name(rawValue: "Sep"), .sep)
+    XCTAssertEqual(Month.Name(rawValue: "Oct"), .oct)
+    XCTAssertEqual(Month.Name(rawValue: "Nov"), .nov)
+    XCTAssertEqual(Month.Name(rawValue: "Dec"), .dec)
+
+    XCTAssertEqual(Month.Name(rawValue: "January"), .jan)
+    XCTAssertEqual(Month.Name(rawValue: "February"), .feb)
+    XCTAssertEqual(Month.Name(rawValue: "March"), .mar)
+    XCTAssertEqual(Month.Name(rawValue: "April"), .apr)
+    XCTAssertEqual(Month.Name(rawValue: "May"), .may)
+    XCTAssertEqual(Month.Name(rawValue: "June"), .jun)
+    XCTAssertEqual(Month.Name(rawValue: "July"), .jul)
+    XCTAssertEqual(Month.Name(rawValue: "August"), .aug)
+    XCTAssertEqual(Month.Name(rawValue: "September"), .sep)
+    XCTAssertEqual(Month.Name(rawValue: "October"), .oct)
+    XCTAssertEqual(Month.Name(rawValue: "November"), .nov)
+    XCTAssertEqual(Month.Name(rawValue: "December"), .dec)
+
+    XCTAssertNil(Month.Name(rawValue: "Blah"))
+  }
 }

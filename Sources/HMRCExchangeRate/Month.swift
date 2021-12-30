@@ -70,3 +70,17 @@ public extension Month {
     .init(of: Date())
   }
 }
+
+public extension Month.Name {
+  init?(rawValue: String) {
+    if let intValue = Int(rawValue) {
+      self.init(rawValue: intValue)
+    } else if let monthIndex = Calendar.current.monthSymbols.firstIndex(of: rawValue) {
+      self.init(rawValue: monthIndex + 1)
+    } else if let monthIndex = Calendar.current.shortMonthSymbols.firstIndex(of: rawValue) {
+      self.init(rawValue: monthIndex + 1)
+    } else {
+      return nil
+    }
+  }
+}
