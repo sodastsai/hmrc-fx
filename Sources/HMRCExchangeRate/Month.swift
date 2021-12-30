@@ -1,8 +1,15 @@
 import Foundation
+import Regex
 
 public struct Month {
   public enum Name: Int, RawRepresentable {
     case jan = 1, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec
+  }
+
+  public enum Error: Swift.Error {
+    case unknownStringRepresentation(String)
+    case unknownMonth(String)
+    case unknownYear(String)
   }
 
   public let year: Int
@@ -68,6 +75,39 @@ public extension Month {
 
   static var current: Month {
     .init(of: Date())
+  }
+
+  private static let stringPatterns = [
+    Regex(#"^(?<month>\d{1,2})/(?<year>\d{4})$"#),
+    Regex(#"^(?<month>[A-Z][a-z]+) (?<year>\d{4})$"#),
+  ]
+
+  init(_ string: String) throws {
+    for pattern in Self.stringPatterns {
+      if let month = try Month(string, with: pattern) {
+        self = month
+        return
+      }
+    }
+    throw Month.Error.unknownStringRepresentation(string)
+  }
+
+  private init?(_ string: String, with pattern: Regex) throws {
+    guard let match = pattern.firstMatch(in: string),
+          let yearString = match.group(named: "year")?.value,
+          let monthString = match.group(named: "month")?.value
+    else {
+      return nil
+    }
+
+    guard let month = Month.Name(rawValue: monthString) else {
+      throw Month.Error.unknownMonth(monthString)
+    }
+    guard let year = Int(yearString) else {
+      throw Month.Error.unknownYear(yearString)
+    }
+
+    self.init(month, in: year)
   }
 }
 

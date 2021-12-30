@@ -14,11 +14,13 @@ let package = Package(
   dependencies: [
     .package(url: "https://github.com/MaxDesiatov/XMLCoder.git", .upToNextMinor(from: "0.12.0")),
     .package(url: "https://github.com/apple/swift-argument-parser", from: "1.0.0"),
+    .package(url: "https://github.com/sindresorhus/Regex", from: "1.0.0"),
   ],
   targets: [
     .target(name: "HMRCExchangeRate",
             dependencies: [
               .product(name: "XMLCoder", package: "XMLCoder"),
+              .product(name: "Regex", package: "Regex"),
             ]),
     .testTarget(name: "HMRCExchangeRateTests",
                 dependencies: [

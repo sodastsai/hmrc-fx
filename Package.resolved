@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "Regex",
+        "repositoryURL": "https://github.com/sindresorhus/Regex",
+        "state": {
+          "branch": null,
+          "revision": "bbaeb150734853a5a18af26d3ca050eb11238aa4",
+          "version": "1.0.0"
+        }
+      },
+      {
         "package": "swift-argument-parser",
         "repositoryURL": "https://github.com/apple/swift-argument-parser",
         "state": {

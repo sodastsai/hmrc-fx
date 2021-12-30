@@ -97,4 +97,32 @@ final class MonthTests: XCTestCase {
 
     XCTAssertNil(Month.Name(rawValue: "Blah"))
   }
+
+  func testMonthStringLiteral() throws {
+    XCTAssertEqual(try Month("1/2021"), Month(.jan, in: 2021))
+    XCTAssertEqual(try Month("04/1992"), Month(.apr, in: 1992))
+    XCTAssertEqual(try Month("11/2021"), Month(.nov, in: 2021))
+    XCTAssertEqual(try Month("Dec 2022"), Month(.dec, in: 2022))
+    XCTAssertEqual(try Month("July 2020"), Month(.jul, in: 2020))
+  }
+
+  func testMonthStringLiteralWithUnknownPattern() {
+    XCTAssertThrowsError(try Month("Jan,2021")) { error in
+      guard case let Month.Error.unknownStringRepresentation(errorString) = error else {
+        XCTFail("Unknown error: \(error)")
+        return
+      }
+      XCTAssertEqual(errorString, "Jan,2021")
+    }
+  }
+
+  func testMonthStringLiteralWithUnknownMonthString() {
+    XCTAssertThrowsError(try Month("15/2021")) { error in
+      guard case let Month.Error.unknownMonth(errorString) = error else {
+        XCTFail("Unknown error: \(error)")
+        return
+      }
+      XCTAssertEqual(errorString, "15")
+    }
+  }
 }
