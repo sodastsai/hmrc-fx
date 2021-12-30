@@ -13,6 +13,7 @@ let package = Package(
   ],
   dependencies: [
     .package(url: "https://github.com/MaxDesiatov/XMLCoder.git", .upToNextMinor(from: "0.12.0")),
+    .package(url: "https://github.com/apple/swift-argument-parser", from: "1.0.0"),
   ],
   targets: [
     .target(name: "HMRCExchangeRate",
@@ -28,6 +29,7 @@ let package = Package(
                 ]),
     .executableTarget(name: "RateQuery", dependencies: [
       .target(name: "HMRCExchangeRate"),
+      .product(name: "ArgumentParser", package: "swift-argument-parser"),
     ]),
   ]
 )
