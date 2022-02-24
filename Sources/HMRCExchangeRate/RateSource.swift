@@ -1,7 +1,7 @@
 import Foundation
 
 public class RateSource {
-  private var cache = [Month: [Rate.CurrencyCode: [Rate]]]()
+  @MainActor private var cache = [Month: [Rate.CurrencyCode: [Rate]]]()
   private let rateFetcher: RateFetcher
 
   public enum Error: Swift.Error {
@@ -17,16 +17,20 @@ public class RateSource {
   }
 
   public func rate(of currencyCode: String, in month: Month) async throws -> [Rate] {
-    if let monthlyTable = cache[month], let cachedRate = monthlyTable[currencyCode] {
+    if let monthlyTable = await cache[month], let cachedRate = monthlyTable[currencyCode] {
       return cachedRate
     }
 
     let fetchedValue = try await rateFetcher.fetchRate(of: month)
-    cache[month, default: [:]] = fetchedValue
+    await updateCache(for: month, with: fetchedValue)
 
     guard let rates = fetchedValue[currencyCode] else {
       throw RateSource.Error.unknownCurrencyCode
     }
     return rates
+  }
+
+  @MainActor func updateCache(for month: Month, with fetchedValue: [Rate.CurrencyCode: [Rate]]) {
+    cache[month, default: [:]] = fetchedValue
   }
 }
