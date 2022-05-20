@@ -1,6 +1,6 @@
 .PHONY: lint
 
 lint:
-	swiftformat .
-	swiftlint --fix
-	swiftlint lint --strict
+	swift run -c release swiftformat .
+	swift run -c release swiftlint --fix
+	swift run -c release swiftlint lint --strict
