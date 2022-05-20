@@ -1,0 +1,22 @@
+{
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug rate-query",
+            "program": "${workspaceFolder:hmrc-fx}/.build/debug/rate-query",
+            "args": [],
+            "cwd": "${workspaceFolder:hmrc-fx}",
+            "preLaunchTask": "swift: Build Debug rate-query"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Release rate-query",
+            "program": "${workspaceFolder:hmrc-fx}/.build/release/rate-query",
+            "args": [],
+            "cwd": "${workspaceFolder:hmrc-fx}",
+            "preLaunchTask": "swift: Build Release rate-query"
+        }
+    ]
+}
