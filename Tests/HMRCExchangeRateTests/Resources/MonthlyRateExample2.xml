@@ -1,0 +1,9 @@
+<exchangeRateMonthList Period="01/Sep/2019 to 30/Sep/2019">
+    <exchangeRate>
+        <countryName>Taiwan</countryName>
+        <countryCode>TW</countryCode>
+        <currencyName>Dollar</currencyName>
+        <currencyCode>TWD</currencyCode>
+        <rateNew>38.33</rateNew>
+    </exchangeRate>
+</exchangeRateMonthList>

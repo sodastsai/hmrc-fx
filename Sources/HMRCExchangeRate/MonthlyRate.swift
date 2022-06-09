@@ -39,18 +39,18 @@ extension MonthlyRate {
   }
 }
 
-private let periodDateFormatter: DateFormatter = {
-  let formatter = DateFormatter()
-  formatter.dateFormat = "dd/MMM/yyyy"
-  return formatter
-}()
+private let periodDateParsingStrategy = Date.ParseStrategy(
+  format: "\(day: .twoDigits)/\(month: .abbreviated)/\(year: .defaultDigits)",
+  locale: Locale(identifier: "en_US_POSIX"),
+  timeZone: .current
+)
 
 private func parseRepresentingMonth(from period: String) -> Month? {
   let components = period.split(separator: " ")
   guard
     components.count == 3,
-    let beginDate = periodDateFormatter.date(from: String(components[0])),
-    let endDate = periodDateFormatter.date(from: String(components[2]))
+    let beginDate = try? Date(String(components[0]), strategy: periodDateParsingStrategy),
+    let endDate = try? Date(String(components[2]), strategy: periodDateParsingStrategy)
   else { return nil }
 
   let beginMonth = Month(of: beginDate)

@@ -3,9 +3,9 @@ import Foundation
 import XCTest
 
 final class MonthlyRateParserTests: XCTestCase {
-  func testParseMonthlyXML() {
+  func testParseMonthlyXML1() {
     guard
-      let xmlPath = Bundle.module.path(forResource: "MonthlyRateExample", ofType: "xml")
+      let xmlPath = Bundle.module.path(forResource: "MonthlyRateExample1", ofType: "xml")
     else {
       XCTFail("Cannot load example XML")
       return
@@ -35,5 +35,19 @@ final class MonthlyRateParserTests: XCTestCase {
     XCTAssertEqual(twdRate.currency.name, "Dollar")
     XCTAssertEqual(twdRate.currency.code, "TWD")
     XCTAssertEqual("\(twdRate.rate)", "39.84")
+  }
+
+  func testParseMonthlyXML2() {
+    guard
+      let xmlPath = Bundle.module.path(forResource: "MonthlyRateExample2", ofType: "xml")
+    else {
+      XCTFail("Cannot load example XML")
+      return
+    }
+    guard let monthlyRate = try? MonthlyRate(contentsOf: URL(fileURLWithPath: xmlPath)) else {
+      XCTFail("Failed to parse XML")
+      return
+    }
+    XCTAssertEqual(monthlyRate.month, Month(.sep, in: 2019))
   }
 }
