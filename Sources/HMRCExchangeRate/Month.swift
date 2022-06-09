@@ -112,12 +112,16 @@ public extension Month {
 }
 
 public extension Month.Name {
+  private static let monthShortNames = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+  ]
+
   init?(rawValue: String) {
     if let intValue = Int(rawValue) {
       self.init(rawValue: intValue)
     } else if let monthIndex = Calendar.current.monthSymbols.firstIndex(of: rawValue) {
       self.init(rawValue: monthIndex + 1)
-    } else if let monthIndex = Calendar.current.shortMonthSymbols.firstIndex(of: rawValue) {
+    } else if let monthIndex = Self.monthShortNames.firstIndex(of: rawValue) {
       self.init(rawValue: monthIndex + 1)
     } else {
       return nil
