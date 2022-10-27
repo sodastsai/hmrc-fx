@@ -1,4 +1,4 @@
-// swift-tools-version:5.5
+// swift-tools-version:5.7
 
 import PackageDescription
 
@@ -15,8 +15,8 @@ let package = Package(
     .package(url: "https://github.com/MaxDesiatov/XMLCoder.git", .upToNextMinor(from: "0.12.0")),
     .package(url: "https://github.com/apple/swift-argument-parser", from: "1.0.0"),
     .package(url: "https://github.com/sindresorhus/Regex", from: "1.0.0"),
-    .package(url: "https://github.com/nicklockwood/SwiftFormat", from: "0.49.0"),
-    .package(url: "https://github.com/realm/SwiftLint", from: "0.47.1"),
+    .package(url: "https://github.com/nicklockwood/SwiftFormat", from: "0.49.17"),
+    .package(url: "https://github.com/realm/SwiftLint", from: "0.48.0"),
   ],
   targets: [
     .target(name: "HMRCExchangeRate",
