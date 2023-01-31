@@ -2,6 +2,7 @@ import ArgumentParser
 import Foundation
 import HMRCExchangeRate
 
+@main
 struct RateQuery: AsyncParsableCommand {
   @Argument(help: "Currency name, like TWD, USD")
   var currency: String
@@ -23,12 +24,5 @@ struct RateQuery: AsyncParsableCommand {
     } else {
       print(rates)
     }
-  }
-}
-
-@main
-enum App {
-  static func main() async throws {
-    try await RateQuery.main()
   }
 }

@@ -8,7 +8,7 @@ class MockRateFetcher: RateFetcher {
 
   func fetchRate(of month: Month) async throws -> [Rate.CurrencyCode: [Rate]] {
     fetchingCount[month, default: 0] += 1
-    guard let rate = rate else {
+    guard let rate else {
       throw RateFetcherError.fetchingError
     }
     return ["TWD": [Rate(country: .init(name: "Taiwan", code: "TW"),

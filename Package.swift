@@ -12,11 +12,10 @@ let package = Package(
     .executable(name: "rate-query", targets: ["RateQuery"]),
   ],
   dependencies: [
-    .package(url: "https://github.com/MaxDesiatov/XMLCoder.git", .upToNextMinor(from: "0.12.0")),
-    .package(url: "https://github.com/apple/swift-argument-parser", from: "1.0.0"),
+    .package(url: "https://github.com/MaxDesiatov/XMLCoder", .upToNextMinor(from: "0.15.0")),
+    .package(url: "https://github.com/apple/swift-argument-parser", .upToNextMinor(from: "1.2.0")),
     .package(url: "https://github.com/sindresorhus/Regex", from: "1.0.0"),
-    .package(url: "https://github.com/nicklockwood/SwiftFormat", from: "0.49.17"),
-    .package(url: "https://github.com/realm/SwiftLint", from: "0.48.0"),
+    .package(url: "https://github.com/nicklockwood/SwiftFormat", from: "0.50.4"),
   ],
   targets: [
     .target(name: "HMRCExchangeRate",
